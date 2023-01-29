@@ -13,7 +13,7 @@ async function generateSvg(code) {
     try {
         const res = await axios.get(`http://www.plantuml.com/plantuml/svg/${encoded}`);
         return res.data;
-    } catch(e) {
+    } catch (e) {
         // TODO
     }
 }
@@ -29,12 +29,12 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
 (async function main() {
     const payload = github.context.payload;
-    const ref     = payload.ref;
+    const ref = payload.ref;
     if (!payload.repository) {
         throw new Error();
     }
-    const owner   = payload.repository.owner.login;
-    const repo    = payload.repository.name;
+    const owner = payload.repository.owner.login;
+    const repo = payload.repository.name;
 
     const commits = await getCommitsFromPayload(octokit, payload);
     const files = updatedFiles(commits);
@@ -82,7 +82,7 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
     const createdCommitRes = await octokit.git.createCommit({
         owner, repo,
         message: commitMessage,
-        parents: [ commits[commits.length - 1].sha ],
+        parents: [commits[commits.length - 1].sha],
         tree: treeRes.data.sha,
     });
 
@@ -92,6 +92,7 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
         sha: createdCommitRes.data.sha,
     });
 
+    console.log(`Tree is: ${tree}`)
     console.log(`${tree.map(t => t.path).join("\n")}\nAbove files are generated.`);
 })().catch(e => {
     core.setFailed(e);
