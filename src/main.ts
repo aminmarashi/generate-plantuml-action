@@ -28,6 +28,7 @@ if (!process.env.GITHUB_TOKEN) {
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
 (async function main() {
+    console.log('testing shit')
     const payload = github.context.payload;
     const ref = payload.ref;
     if (!payload.repository) {
