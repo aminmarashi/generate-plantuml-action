@@ -29,9 +29,9 @@ if (!process.env.GITHUB_TOKEN) {
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
 (async function main() {
-    core.error('testing shit')
     const payload = github.context.payload;
     const ref = payload.ref;
+    core.info(JSON.stringify(payload))
     if (!payload.repository) {
         throw new Error();
     }
