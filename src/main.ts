@@ -28,7 +28,7 @@ if (!process.env.GITHUB_TOKEN) {
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
 (async function main() {
-    core.info('testing shit')
+    core.error('testing shit')
     const payload = github.context.payload;
     const ref = payload.ref;
     if (!payload.repository) {
@@ -71,7 +71,7 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
     }
 
     if (tree.length === 0) {
-        core.info(`There are no files to be generated.`);
+        core.error(`There are no files to be generated.`);
         return;
     }
 
@@ -93,8 +93,8 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
         sha: createdCommitRes.data.sha,
     });
 
-    core.info(`Tree is: ${tree}`)
-    core.info(`${tree.map(t => t.path).join("\n")}\nAbove files are generated.`);
+    core.error(`Tree is: ${tree}`)
+    core.error(`${tree.map(t => t.path).join("\n")}\nAbove files are generated.`);
 })().catch(e => {
     core.setFailed(e);
 });

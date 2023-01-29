@@ -1,3 +1,4 @@
+import * as core from '@actions/core';
 import fs from 'fs';
 import { uniq } from 'lodash';
 import path from 'path';
@@ -84,18 +85,18 @@ export async function getCommitsFromPayload(octokit, payload) {
     const owner = payload.repository.owner.login;
     const repo = payload.repository.name;
 
-    core.info(`Retrieving ${commits}`)
+    core.error(`Retrieving ${commits}`)
     const res = await Promise.all(commits.map(commit => octokit.repos.getCommit({
         owner, repo, ref: commit.id
     })));
-    core.info(`Retrieved ${res}`)
+    core.error(`Retrieved ${res}`)
     return res.map(res => (<any>res).data);
 }
 
 export function updatedFiles(commits) {
     return uniq(commits.reduce(
         (accum: any[], commit) => {
-            core.info('Test: ', commit.files.filter(f => f.status !== 'removed'))
+            core.error('Test: ', commit.files.filter(f => f.status !== 'removed'))
             return accum.concat(
                 commit.files.filter(f => f.status !== 'removed').map(f => f.filename)
             )
