@@ -33,7 +33,7 @@ const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
     const ref = payload.ref;
     core.error(JSON.stringify(payload))
     if (!payload.repository) {
-        throw new Error();
+        throw new Error('errr');
     }
     const owner = payload.repository.owner.login;
     const repo = payload.repository.name;
