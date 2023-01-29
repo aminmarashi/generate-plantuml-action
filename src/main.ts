@@ -23,7 +23,7 @@ const diagramPath = core.getInput('path');
 const commitMessage = core.getInput('message');
 
 if (!process.env.GITHUB_TOKEN) {
-    core.setFailed('Please set GITHUB_TOKEN env var.');
+    core.setFailed('Please aha set GITHUB_TOKEN env var.');
     process.exit(1);
 }
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
